@@ -1,0 +1,73 @@
+# Limitless 测试配置（所有阶段共用）
+
+# Base 链 RPC 端点（用于查询 USDC 余额和授权）
+rpc_url = "https://rpc.ankr.com/base/<MASKED_RPC_KEY>"
+#
+# 阶段 1：只需 HMAC 凭据
+# 阶段 2：需要 HMAC 凭据 + private_key
+
+[hedge]
+market_category = "/crypto"
+scan_interval_secs = 30
+
+[hedge.filters]
+duration = "5-min"
+
+[account_a]
+hmac_token_id = "<MASKED_HMAC_TOKEN_ID>"
+hmac_secret = "<MASKED_HMAC_SECRET>"
+api_key = "<MASKED_API_KEY>"
+# 阶段 2 需要填入：EIP-712 订单签名用
+private_key = "<MASKED_PRIVATE_KEY>"
+
+[account_b]
+hmac_token_id = "<MASKED_HMAC_TOKEN_ID>"
+hmac_secret = "<MASKED_HMAC_SECRET>"
+api_key = "<MASKED_API_KEY>"
+private_key = "<MASKED_PRIVATE_KEY>"
+
+# 策略配置（可选，不填则使用默认值）
+[strategy]
+# 策略名称
+name = "directional_hedge"
+# 每笔订单合约数
+contract_count = 2.00
+# 结算后等待赎回秒数
+settle_redeem_delay_secs = 30
+# 排除的币种
+excluded_tickers = ["xrp", "doge"]
+# 最大同时入场数（防止资金分散）
+max_active_markets = 1
+# ask 价格区间 [min, max]（best_ask 在此区间内才入场）
+ask_range = [0.8, 1.0]
+# 最小 spread（spread > 此值才入场）
+min_spread = 0.31
+# 价格精度
+price_tick = 0.001
+# 入场时间窗口 [min, max]（秒）
+settle_time_range = [3, 15]
+# Oracle 最大允许延迟（秒），超过则视为过期
+oracle_max_age_secs = 3
+# 生产建议 true：oracle 不存在或过期时跳过，不 fallback
+require_fresh_oracle = true
+# 底层价格相对初始价格偏离超过此比例才入场（0.0005 = 0.05%）
+min_oracle_move_pct = 0.0005
+# 挂单后等待状态查询延迟（毫秒）
+order_status_delay_ms = 500
+# API 重试次数
+max_retries = 2
+# 重试间隔（毫秒）
+retry_delay_ms = 200
+# 赎回后从大钱包转给小钱包的 USDC 数量
+post_redeem_transfer_usdc = 10.0
+# 最大允许亏损比例（0.05 = 5%）
+max_loss_pct = 0.05
+# 启动前每个钱包最低 Base 原生 ETH 余额
+min_eth_balance = 0.00056
+# 大单价格覆盖（可选，测试用）
+# 不配置：用实时 best_ask - price_tick（生产模式）
+# 配置固定值（如 0.5）：直接用这个价格，降低成本
+gtc_price_override = 0.5
+
+[logging]
+level = "debug"

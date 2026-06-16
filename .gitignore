@@ -1,0 +1,24 @@
+# Build
+target/
+
+# IDE
+.idea/
+.zed/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Sensitive config（只上传打码后的临时配置）
+/config/limitless.toml
+
+# Tests
+/tests/
+
+# Docs (optional)
+/docs/
+
+# Lock file (optional, uncomment if needed)
+# Cargo.lock
