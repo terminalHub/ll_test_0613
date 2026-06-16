@@ -11,14 +11,14 @@ target/
 .DS_Store
 Thumbs.db
 
+# AI assistant
+CLAUDE.md
+
 # Sensitive config（只上传打码后的临时配置）
 /config/limitless.toml
 
 # Tests
 /tests/
 
-# Docs (optional)
+# Docs
 /docs/
-
-# Lock file (optional, uncomment if needed)
-# Cargo.lock
